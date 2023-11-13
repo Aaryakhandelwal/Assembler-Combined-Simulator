@@ -1,6 +1,4 @@
-var xyz
-var xyz
-var xyz
-var xyz
-var xyz
+add R0 R1 R2
+add R1 R5 R2
+add R2 R3 R4
 hlt

@@ -1,0 +1,5 @@
+.PHONY: all
+
+all: 
+    python3 SimpleAssembler.py
+    python3 SimpleSimulator.py

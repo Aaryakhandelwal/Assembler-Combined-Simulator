@@ -1,0 +1,3 @@
+run-scripts:
+	python Final_SimpleAssembler.py
+	python Final_Simulator.py

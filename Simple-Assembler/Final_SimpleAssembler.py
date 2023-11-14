@@ -535,10 +535,8 @@ f.close()
 
 
 #writing the machine code in output file
-f1=open("assembler-output.txt","w")
-f1.write("Machine Code:\n")
-f1.close()
 
-f1=open("assembler-output.txt","a")
+
+f1=open("assembler-output.txt","w")
 splitter()
 f1.close()

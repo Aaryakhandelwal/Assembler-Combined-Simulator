@@ -2,9 +2,7 @@
 import sys
 
 # *********************** REGS *****************************
-# Register File (RF): The RF takes in the register name (R0, R1, ... R6 or FLAGS) and
-# returns the value stored at that register.
-# here R is the RF
+
 #f1 = open("Simple_Simulator/input.txt","r")
 #f2 = open("Simple_Simulator/output.txt","w")
 
@@ -19,7 +17,7 @@ R = {
     "111": 0,
 }
 
-
+# opcodes are defined
 opcodeStack = {
     "00000": "A",
     "00001": "A",
@@ -69,16 +67,13 @@ def binaryConverter(num, bitSize): #integer to binary
     return bin
 
 
-# ************************ BHAI YE CHAHIYE Q2 KE LIYE?, PLS CONFIRM!   NAHII NAHII Q3 KE LIYE ***************************
 
 def floatValidity(imm: str):
     imm = list(imm)
     if imm[0] == "$":
         try:
             imm = float("".join(imm[1:]))
-            if (
-                type(imm) == float
-            ):  # ADD and imm in range(), the range of M and exponent
+            if (type(imm) == float):  
                 return True
         except ValueError:
             print("Invalid immediate.")
@@ -90,32 +85,28 @@ def floatValidity(imm: str):
 # Memory (MEM): MEM takes in an 7 bit address and returns a 16 bit value as the data.
 # The MEM stores 256 bytes, initialized to 0s.
 
-TOT_SIZE = 128
-mem_stack = ["0000000000000000"] * TOT_SIZE
 
 
 def fileReader():
-    assembleOut = []
-    for kx in sys.stdin:
-        assembleOut.append(kx)
+    f=open("assembler-output.txt","r")
+    assembleOut = f.readlines()
+    # for kx in sys.stdin:
+    #     assembleOut.append(kx)
     i=0
     for line in assembleOut:
         mem_stack[i] = line.rstrip("\n")
         i=i+1
+    f.close()
 
 def dump_memory():
+    
+     
     for Address in mem_stack:
-        sys.stdout.write(Address+'\n')
+        f1.write(Address+'\n')
+    f1.close()
 
-PC = 0 #Program Counter (PC): The PC is an 7 bit register which points to the current instruction.
-Cycle = 0
-Cycle = -1
-temp = []
 
-hltFlag = 0
 
-fileReader()
-#print("REACHED")
 
 # ******************************** EE *******************************
 
@@ -369,20 +360,29 @@ def jlt(line):
 
 
 def dump():
-    # print(binaryConverter(int(PC), 7), end=" ")
-    sys.stdout.write(binaryConverter(int(PC), 7))
-    sys.stdout.write("        ")
+    f1.write(binaryConverter(int(PC), 7))
+    f1.write("        ")
     
     for reg in R:
-        # print(binaryConverter(int(R[reg]), 16), end=" ")
-        sys.stdout.write(binaryConverter(int(R[reg]), 16))
-        sys.stdout.write(" ")
-    sys.stdout.write("\n")
+        f1.write(binaryConverter(int(R[reg]), 16))
+        f1.write(" ")
+    f1.write("\n")
+    
+    
+TOT_SIZE = 128
+mem_stack = ["0000000000000000"] * TOT_SIZE
+PC = 0 #Program Counter (PC): The PC is an 7 bit register which points to the current instruction.
+Cycle = 0
+Cycle = -1
+temp = []
+hltFlag = 0
 
+fileReader()
 
-lines = []
+f1=open("simulator-output.txt","w")
+lines = [] #has all the machine code lines
+count = 0  #maintains line count
 
-count = 0
 while hltFlag != 1:
     count += 1
     if count > 100000:
